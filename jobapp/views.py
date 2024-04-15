@@ -18,7 +18,7 @@ User = get_user_model()
 
 
 def home_view(request):
-
+    print(type(request))
     published_jobs = Job.objects.filter(is_published=True).order_by('-timestamp')
     jobs = published_jobs.filter(is_closed=False)
     total_candidates = User.objects.filter(role='employee').count()
@@ -27,29 +27,29 @@ def home_view(request):
     page_number = request.GET.get('page',None)
     page_obj = paginator.get_page(page_number)
 
-    if request.is_ajax():
-        job_lists=[]
-        job_objects_list = page_obj.object_list.values()
-        for job_list in job_objects_list:
-            job_lists.append(job_list)
+    # if request.is_ajax():
+    #     job_lists=[]
+    #     job_objects_list = page_obj.object_list.values()
+    #     for job_list in job_objects_list:
+    #         job_lists.append(job_list)
         
 
-        next_page_number = None
-        if page_obj.has_next():
-            next_page_number = page_obj.next_page_number()
+    #     next_page_number = None
+    #     if page_obj.has_next():
+    #         next_page_number = page_obj.next_page_number()
 
-        prev_page_number = None       
-        if page_obj.has_previous():
-            prev_page_number = page_obj.previous_page_number()
+    #     prev_page_number = None       
+    #     if page_obj.has_previous():
+    #         prev_page_number = page_obj.previous_page_number()
 
-        data={
-            'job_lists':job_lists,
-            'current_page_no':page_obj.number,
-            'next_page_number':next_page_number,
-            'no_of_page':paginator.num_pages,
-            'prev_page_number':prev_page_number
-        }    
-        return JsonResponse(data)
+    #     data={
+    #         'job_lists':job_lists,
+    #         'current_page_no':page_obj.number,
+    #         'next_page_number':next_page_number,
+    #         'no_of_page':paginator.num_pages,
+    #         'prev_page_number':prev_page_number
+    #     }    
+    #     return JsonResponse(data)
     
     context = {
 

@@ -1,4 +1,6 @@
 from django.urls import path
+from django.conf.urls.static import static
+from job import settings
 from jobapp import views
 
 app_name = "jobapp"
@@ -22,6 +24,4 @@ urlpatterns = [
     path('dashboard/employer/close/<int:id>/', views.make_complete_job_view, name='complete'),
     path('dashboard/employer/delete/<int:id>/', views.delete_job_view, name='delete'),
     path('dashboard/employee/delete-bookmark/<int:id>/', views.delete_bookmark_view, name='delete-bookmark'),
-
-
-]
+]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 
